@@ -1,6 +1,6 @@
 import {
   Component, inject, signal, computed,
-  OnInit, OnDestroy, ElementRef, AfterViewInit, ViewChild
+  OnInit, OnDestroy
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RegistroService } from '../../core/services/registro.service';
@@ -19,12 +19,13 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-xl font-semibold text-slate-100">📋 Registro de Accesos</h1>
+          <h1 class="text-xl font-semibold text-slate-900 dark:text-slate-100">📋 Registro de Accesos</h1>
           <p class="text-sm text-slate-500 mt-0.5">Control en tiempo real del estado de los camiones</p>
         </div>
         <button
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400
-                 hover:text-slate-200 hover:bg-slate-800 border border-slate-700 transition-colors"
+          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
+                 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200
+                 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 transition-colors"
           (click)="cargar()" [disabled]="loading()">
           <svg class="w-3.5 h-3.5" [class.animate-spin]="loading()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -36,19 +37,19 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
 
       <!-- Stats -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">🚛 Total Camiones</p>
-          <p class="text-2xl font-bold text-slate-100">{{ registros().length }}</p>
+          <p class="text-2xl font-bold text-slate-900 dark:text-slate-100">{{ registros().length }}</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">🟠 En Reparto</p>
           <p class="text-2xl font-bold text-amber-400">{{ enReparto() }}</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">🟢 Disponibles</p>
           <p class="text-2xl font-bold text-emerald-400">{{ disponibles() }}</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">📊 Viajes totales</p>
           <p class="text-2xl font-bold text-blue-400">{{ historico().length }}</p>
         </div>
@@ -58,12 +59,12 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
 
         <!-- Donut: disponible vs reparto -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
-          <p class="text-xs font-medium text-slate-400 mb-3">Estado de la flota</p>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Estado de la flota</p>
           <div class="flex items-center gap-4">
             <div class="relative w-24 h-24 shrink-0">
               <svg viewBox="0 0 100 100" class="w-full h-full">
-                <circle cx="50" cy="50" r="38" fill="none" stroke="#1e293b" stroke-width="12"/>
+                <circle cx="50" cy="50" r="38" fill="none" class="stroke-slate-200 dark:stroke-slate-800" stroke-width="12"/>
                 @if (registros().length > 0) {
                   <circle cx="50" cy="50" r="38" fill="none" stroke="#10b981" stroke-width="12"
                     transform="rotate(-90 50 50)"
@@ -74,7 +75,7 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                     [attr.stroke-dasharray]="donut().repArr"
                     [attr.stroke-dashoffset]="donut().repOffset"/>
                 }
-                <text x="50" y="46" text-anchor="middle" fill="#e2e8f0" font-size="16" font-weight="700"
+                <text x="50" y="46" text-anchor="middle" class="fill-slate-800 dark:fill-slate-200" font-size="16" font-weight="700"
                   font-family="sans-serif">{{ registros().length }}</text>
                 <text x="50" y="59" text-anchor="middle" fill="#64748b" font-size="8"
                   font-family="sans-serif">camiones</text>
@@ -100,20 +101,20 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
         </div>
 
         <!-- Bar: por modelo -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
-          <p class="text-xs font-medium text-slate-400 mb-3">Camiones por modelo</p>
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
+          <p class="text-xs font-medium text-slate-500 dark:text-slate-400 mb-3">Camiones por modelo</p>
           @if (barData().length === 0) {
-            <div class="flex items-center justify-center h-20 text-xs text-slate-600">Sin datos</div>
+            <div class="flex items-center justify-center h-20 text-xs text-slate-400 dark:text-slate-600">Sin datos</div>
           } @else {
             <div class="space-y-2">
               @for (item of barData(); track item.label) {
                 <div class="flex items-center gap-2">
                   <span class="text-xs text-slate-500 w-20 truncate shrink-0" [title]="item.label">{{ item.label }}</span>
-                  <div class="flex-1 bg-slate-800 rounded-full h-2 overflow-hidden">
+                  <div class="flex-1 bg-slate-100 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
                     <div class="h-full bg-orange-500 rounded-full transition-all duration-500"
                       [style.width.%]="(item.count / barMax()) * 100"></div>
                   </div>
-                  <span class="text-xs font-bold text-slate-300 w-4 text-right shrink-0">{{ item.count }}</span>
+                  <span class="text-xs font-bold text-slate-600 dark:text-slate-300 w-4 text-right shrink-0">{{ item.count }}</span>
                 </div>
               }
             </div>
@@ -121,9 +122,9 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
         </div>
 
         <!-- Line: salidas -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
           <div class="flex items-center justify-between mb-3">
-            <p class="text-xs font-medium text-slate-400">Salidas (14 días)</p>
+            <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Salidas (14 días)</p>
             <span class="text-sm font-bold text-orange-400">{{ salidasTotal() }}</span>
           </div>
           <svg viewBox="0 0 260 70" preserveAspectRatio="none" class="w-full h-14">
@@ -145,15 +146,15 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
             }
           </svg>
           <div class="flex justify-between mt-1">
-            <span class="text-xs text-slate-600">{{ lineLabels()[0] }}</span>
-            <span class="text-xs text-slate-600">{{ lineLabels()[13] }}</span>
+            <span class="text-xs text-slate-400 dark:text-slate-600">{{ lineLabels()[0] }}</span>
+            <span class="text-xs text-slate-400 dark:text-slate-600">{{ lineLabels()[13] }}</span>
           </div>
         </div>
 
         <!-- Line: entradas -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-4">
           <div class="flex items-center justify-between mb-3">
-            <p class="text-xs font-medium text-slate-400">Entradas (14 días)</p>
+            <p class="text-xs font-medium text-slate-500 dark:text-slate-400">Entradas (14 días)</p>
             <span class="text-sm font-bold text-blue-400">{{ entradasTotal() }}</span>
           </div>
           <svg viewBox="0 0 260 70" preserveAspectRatio="none" class="w-full h-14">
@@ -175,14 +176,14 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
             }
           </svg>
           <div class="flex justify-between mt-1">
-            <span class="text-xs text-slate-600">{{ lineLabels()[0] }}</span>
-            <span class="text-xs text-slate-600">{{ lineLabels()[13] }}</span>
+            <span class="text-xs text-slate-400 dark:text-slate-600">{{ lineLabels()[0] }}</span>
+            <span class="text-xs text-slate-400 dark:text-slate-600">{{ lineLabels()[13] }}</span>
           </div>
         </div>
       </div>
 
       <!-- RFID Scanner -->
-      <div class="bg-slate-900 border border-orange-500/20 rounded-2xl p-5 glow-orange">
+      <div class="bg-white dark:bg-slate-900 border border-orange-500/20 rounded-2xl p-5 glow-orange">
         <div class="flex items-center gap-3 mb-4">
           <div class="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center justify-center">
             <svg class="w-4 h-4 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -191,16 +192,16 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
             </svg>
           </div>
           <div>
-            <p class="text-sm font-medium text-slate-200">📡 Lector RFID</p>
+            <p class="text-sm font-medium text-slate-800 dark:text-slate-200">📡 Lector RFID</p>
             <p class="text-xs text-slate-500">Ingresa o escanea el código RFID del camión</p>
           </div>
         </div>
         <form (ngSubmit)="registrar()" class="flex gap-2">
           <input type="text" [(ngModel)]="rfidInput" name="rfid"
             placeholder="Código RFID del camión..."
-            class="flex-1 px-4 py-3 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                   placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2
-                   focus:ring-orange-500/50 focus:border-orange-500/50 transition-all"
+            class="flex-1 px-4 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                   text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                   text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500/50 transition-all"
             [disabled]="registrando()"/>
           <app-button type="submit" variant="primary" size="md"
             [loading]="registrando()" [disabled]="!rfidInput.trim()">
@@ -213,10 +214,10 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       </div>
 
       <!-- Fleet table -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-          <h2 class="text-sm font-medium text-slate-200">🗂️ Estado actual de la flota</h2>
-          @if (loading()) { <app-spinner size="sm" class="text-slate-500"/> }
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <h2 class="text-sm font-medium text-slate-800 dark:text-slate-200">🗂️ Estado actual de la flota</h2>
+          @if (loading()) { <app-spinner size="sm" class="text-slate-400"/> }
         </div>
         @if (loading() && registros().length === 0) {
           <div class="flex items-center justify-center py-16">
@@ -227,14 +228,14 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
           </div>
         } @else if (registros().length === 0) {
           <div class="flex flex-col items-center justify-center py-16 text-center px-4">
-            <p class="text-sm font-medium text-slate-400">Sin registros</p>
-            <p class="text-xs text-slate-600 mt-1">No hay camiones registrados en el sistema</p>
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Sin registros</p>
+            <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">No hay camiones registrados en el sistema</p>
           </div>
         } @else {
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
-                <tr class="border-b border-slate-800">
+                <tr class="border-b border-slate-200 dark:border-slate-800">
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Patente</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Conductor</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden md:table-cell">Empresa</th>
@@ -244,36 +245,36 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Estado</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-800/60">
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                 @for (reg of registros(); track reg.patente) {
-                  <tr class="hover:bg-slate-800/40 transition-colors">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                     <td class="px-5 py-3.5">
                       <div>
                         <span class="font-mono text-sm font-medium text-orange-400">{{ reg.patente }}</span>
-                        <p class="text-xs text-slate-600 hidden sm:block">{{ reg.marca }} {{ reg.modelo }}</p>
+                        <p class="text-xs text-slate-400 dark:text-slate-600 hidden sm:block">{{ reg.marca }} {{ reg.modelo }}</p>
                       </div>
                     </td>
                     <td class="px-5 py-3.5">
                       @if (reg.conductor) {
                         <div>
-                          <p class="text-slate-200 font-medium">{{ reg.conductor.nombre }}</p>
+                          <p class="text-slate-800 dark:text-slate-200 font-medium">{{ reg.conductor.nombre }}</p>
                           <p class="text-xs text-slate-500 font-mono">{{ reg.conductor.rut }}</p>
                         </div>
                       } @else {
-                        <span class="text-slate-600 text-xs">Sin conductor</span>
+                        <span class="text-slate-400 dark:text-slate-600 text-xs">Sin conductor</span>
                       }
                     </td>
                     <td class="px-5 py-3.5 hidden md:table-cell">
-                      <span class="text-slate-300">{{ reg.empresa || '—' }}</span>
+                      <span class="text-slate-600 dark:text-slate-300">{{ reg.empresa || '—' }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
-                      <span class="text-slate-400 text-xs">{{ reg.tipoCarga || '—' }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs">{{ reg.tipoCarga || '—' }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
-                      <span class="text-slate-400 text-xs font-mono">{{ reg.salida ? formatDate(reg.salida) : '—' }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs font-mono">{{ reg.salida ? formatDate(reg.salida) : '—' }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
-                      <span class="text-slate-400 text-xs font-mono">{{ reg.ingreso ? formatDate(reg.ingreso) : '—' }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs font-mono">{{ reg.ingreso ? formatDate(reg.ingreso) : '—' }}</span>
                     </td>
                     <td class="px-5 py-3.5">
                       <app-badge [variant]="reg.estado === 'Disponible' ? 'success' : 'warning'">
@@ -289,24 +290,24 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       </div>
 
       <!-- Historico section -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
           <div>
-            <h2 class="text-sm font-medium text-slate-200">🕓 Histórico reciente</h2>
+            <h2 class="text-sm font-medium text-slate-800 dark:text-slate-200">🕓 Histórico reciente</h2>
             <p class="text-xs text-slate-500 mt-0.5">Últimos {{ historicoReciente().length }} viajes completados</p>
           </div>
-          @if (loadingHistorico()) { <app-spinner size="sm" class="text-slate-500"/> }
+          @if (loadingHistorico()) { <app-spinner size="sm" class="text-slate-400"/> }
         </div>
         @if (historicoReciente().length === 0 && !loadingHistorico()) {
           <div class="flex flex-col items-center justify-center py-10 text-center px-4">
-            <p class="text-sm font-medium text-slate-400">Sin viajes registrados</p>
-            <p class="text-xs text-slate-600 mt-1">Aquí aparecerán los viajes completados (salida + entrada)</p>
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Sin viajes registrados</p>
+            <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">Aquí aparecerán los viajes completados (salida + entrada)</p>
           </div>
         } @else {
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
-                <tr class="border-b border-slate-800">
+                <tr class="border-b border-slate-200 dark:border-slate-800">
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">#</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Patente</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Conductor</th>
@@ -316,32 +317,32 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden lg:table-cell">Duración</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-800/60">
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                 @for (h of historicoReciente(); track h.id) {
-                  <tr class="hover:bg-slate-800/40 transition-colors">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                     <td class="px-5 py-3.5">
-                      <span class="text-xs text-slate-600 font-mono">#{{ h.id }}</span>
+                      <span class="text-xs text-slate-400 dark:text-slate-600 font-mono">#{{ h.id }}</span>
                     </td>
                     <td class="px-5 py-3.5">
                       <span class="font-mono text-sm font-medium text-orange-400">{{ h.patente }}</span>
                     </td>
                     <td class="px-5 py-3.5">
                       <div>
-                        <p class="text-slate-200 font-medium">{{ h.conductor.nombre }}</p>
+                        <p class="text-slate-800 dark:text-slate-200 font-medium">{{ h.conductor.nombre }}</p>
                         <p class="text-xs text-slate-500 font-mono">{{ h.conductor.rut }}</p>
                       </div>
                     </td>
                     <td class="px-5 py-3.5 hidden md:table-cell">
-                      <span class="text-slate-300">{{ h.empresa }}</span>
+                      <span class="text-slate-600 dark:text-slate-300">{{ h.empresa }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
-                      <span class="text-slate-400 text-xs font-mono">{{ formatDate(h.salidaAt) }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs font-mono">{{ formatDate(h.salidaAt) }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
-                      <span class="text-slate-400 text-xs font-mono">{{ formatDate(h.entradaAt) }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs font-mono">{{ formatDate(h.entradaAt) }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
-                      <span class="text-emerald-400 text-xs font-mono">{{ duracion(h.salidaAt, h.entradaAt) }}</span>
+                      <span class="text-emerald-500 dark:text-emerald-400 text-xs font-mono">{{ duracion(h.salidaAt, h.entradaAt) }}</span>
                     </td>
                   </tr>
                 }
@@ -367,14 +368,10 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   private refreshInterval?: ReturnType<typeof setInterval>;
 
-  // ── Stats ──────────────────────────────────────────────────
   enReparto    = computed(() => this.registros().filter(r => r.estado === 'Reparto').length);
   disponibles  = computed(() => this.registros().filter(r => r.estado === 'Disponible').length);
-
-  // ── Historico table (last 15) ───────────────────────────────
   historicoReciente = computed(() => this.historico().slice(0, 15));
 
-  // ── Donut chart ─────────────────────────────────────────────
   donut = computed(() => {
     const r = 38, circ = 2 * Math.PI * r;
     const total = this.registros().length;
@@ -392,7 +389,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
     };
   });
 
-  // ── Bar chart (by model) ────────────────────────────────────
   barData = computed(() => {
     const groups: Record<string, number> = {};
     this.registros().forEach(r => {
@@ -407,7 +403,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   barMax = computed(() => Math.max(...this.barData().map(d => d.count), 1));
 
-  // ── Line charts ─────────────────────────────────────────────
   lineLabels = computed(() => {
     const labels: string[] = [];
     for (let i = 13; i >= 0; i--) {
@@ -419,11 +414,9 @@ export class RegistroComponent implements OnInit, OnDestroy {
 
   salidasTotal  = computed(() => this.salidasLine().points.reduce((a, p) => a + p.val, 0));
   entradasTotal = computed(() => this.entradasLine().points.reduce((a, p) => a + p.val, 0));
-
   salidasLine  = computed(() => this.buildLine(this.historico(), 'salidaAt'));
   entradasLine = computed(() => this.buildLine(this.historico(), 'entradaAt'));
 
-  // ── Lifecycle ───────────────────────────────────────────────
   ngOnInit() {
     this.cargar();
     this.refreshInterval = setInterval(() => this.cargar(), 30_000);
@@ -476,7 +469,6 @@ export class RegistroComponent implements OnInit, OnDestroy {
     return h > 0 ? `${h}h ${m}m` : `${m}m`;
   }
 
-  // ── Chart helpers ────────────────────────────────────────────
   private buildLine(items: HistoricoItem[], field: 'salidaAt' | 'entradaAt') {
     const W = 260, H = 62, PAD = 4;
     const days: string[] = [];

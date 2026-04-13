@@ -8,7 +8,7 @@ import { ButtonComponent } from '../../atoms/button/button.component';
     @if (isOpen()) {
       <div class="fixed inset-0 z-50 flex items-center justify-center p-4">
         <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-        <div class="relative z-10 w-full max-w-sm bg-slate-900 border border-slate-700 rounded-2xl shadow-2xl p-6">
+        <div class="relative z-10 w-full max-w-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl shadow-2xl p-6">
           <div class="flex items-start gap-4 mb-6">
             <div class="flex-shrink-0 w-10 h-10 rounded-full bg-red-500/10 flex items-center justify-center">
               <svg class="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -17,8 +17,8 @@ import { ButtonComponent } from '../../atoms/button/button.component';
               </svg>
             </div>
             <div>
-              <h3 class="text-sm font-semibold text-slate-100 mb-1">{{ title() }}</h3>
-              <p class="text-sm text-slate-400">{{ message() }}</p>
+              <h3 class="text-sm font-semibold text-slate-900 dark:text-slate-100 mb-1">{{ title() }}</h3>
+              <p class="text-sm text-slate-500 dark:text-slate-400">{{ message() }}</p>
             </div>
           </div>
           <div class="flex justify-end gap-2">

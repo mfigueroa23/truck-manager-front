@@ -1,5 +1,6 @@
-import { Component, input, output } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { ThemeService } from '../../../core/services/theme.service';
 
 interface NavItem {
   label: string;
@@ -21,14 +22,14 @@ interface NavItem {
 
     <!-- Sidebar -->
     <aside
-      class="fixed top-0 left-0 z-30 h-screen w-64 bg-slate-900 border-r border-slate-800
+      class="fixed top-0 left-0 z-30 h-screen w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800
              flex flex-col transition-transform duration-300 ease-in-out"
       [class.translate-x-0]="isOpen()"
       [class.-translate-x-full]="!isOpen()"
       [class.md:translate-x-0]="true"
     >
       <!-- Logo -->
-      <div class="flex items-center gap-3 px-5 py-5 border-b border-slate-800">
+      <div class="flex items-center gap-3 px-5 py-5 border-b border-slate-200 dark:border-slate-800">
         <div class="w-9 h-9 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center shrink-0">
           <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
@@ -38,22 +39,22 @@ interface NavItem {
           </svg>
         </div>
         <div>
-          <p class="text-sm font-semibold text-slate-100 leading-none">TruckGate</p>
+          <p class="text-sm font-semibold text-slate-900 dark:text-slate-100 leading-none">TruckGate</p>
           <p class="text-xs text-slate-500 mt-0.5">IoT Control de Acceso</p>
         </div>
       </div>
 
       <!-- Nav -->
       <nav class="flex-1 px-3 py-4 space-y-0.5 overflow-y-auto">
-        <p class="px-2 mb-2 text-xs font-medium text-slate-600 uppercase tracking-wider">Módulos</p>
+        <p class="px-2 mb-2 text-xs font-medium text-slate-400 dark:text-slate-600 uppercase tracking-wider">Módulos</p>
         @for (item of navItems; track item.route) {
           <a
             [routerLink]="item.route"
             routerLinkActive="bg-orange-500/10 text-orange-400 border-orange-500/30"
             [routerLinkActiveOptions]="{ exact: false }"
-            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400
-                   hover:bg-slate-800 hover:text-slate-200 transition-all duration-150
-                   border border-transparent group"
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-500 dark:text-slate-400
+                   hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-800 dark:hover:text-slate-200
+                   transition-all duration-150 border border-transparent group"
             (click)="closed.emit()"
           >
             <span class="w-5 h-5 shrink-0" [innerHTML]="item.icon"></span>
@@ -63,19 +64,46 @@ interface NavItem {
       </nav>
 
       <!-- Footer -->
-      <div class="px-4 py-4 border-t border-slate-800">
+      <div class="px-4 py-4 border-t border-slate-200 dark:border-slate-800">
+        <!-- Theme toggle -->
+        <div class="flex items-center justify-between mb-3">
+          <span class="text-xs text-slate-500">Tema de la interfaz</span>
+          <button
+            (click)="themeService.toggle()"
+            title="{{ themeService.isDark() ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro' }}"
+            class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium
+                   bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400
+                   hover:bg-slate-200 dark:hover:bg-slate-700 hover:text-slate-800 dark:hover:text-slate-200
+                   border border-slate-200 dark:border-slate-700 transition-all"
+          >
+            @if (themeService.isDark()) {
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 7a5 5 0 100 10A5 5 0 0012 7z"/>
+              </svg>
+              Claro
+            } @else {
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+              </svg>
+              Oscuro
+            }
+          </button>
+        </div>
         <div class="flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse-slow"></span>
           <span class="text-xs text-slate-500">API conectada</span>
         </div>
-        <p class="text-xs text-slate-600 mt-1">api-truckmanager.devsonic.cl</p>
+        <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">api-truckmanager.devsonic.cl</p>
       </div>
     </aside>
   `
 })
 export class SidebarComponent {
-  isOpen = input(false);
-  closed = output<void>();
+  isOpen       = input(false);
+  closed       = output<void>();
+  themeService = inject(ThemeService);
 
   navItems: NavItem[] = [
     {

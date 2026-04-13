@@ -20,7 +20,7 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-xl font-semibold text-slate-100">🚛 Camiones</h1>
+          <h1 class="text-xl font-semibold text-slate-900 dark:text-slate-100">🚛 Camiones</h1>
           <p class="text-sm text-slate-500 mt-0.5">{{ camiones().length }} camión{{ camiones().length !== 1 ? 'es' : '' }} en flota</p>
         </div>
         <app-button variant="primary" size="sm" (clicked)="abrirCrear()">
@@ -34,22 +34,23 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
       <!-- Filters -->
       <div class="flex flex-col sm:flex-row gap-2">
         <div class="relative flex-1">
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/>
           </svg>
           <input
             type="text"
             [(ngModel)]="filtroTexto"
             placeholder="Buscar por patente, marca o modelo..."
-            class="w-full pl-9 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-200
-                   placeholder:text-slate-600 focus:outline-none focus:ring-2 focus:ring-orange-500/40
-                   focus:border-orange-500/40 transition-all"
+            class="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm
+                   text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                   focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"
           />
         </div>
         <select
           [(ngModel)]="filtroEstado"
-          class="px-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-400
-                 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"
+          class="px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm
+                 text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40
+                 focus:border-orange-500/40 transition-all"
         >
           <option value="">Todos los estados</option>
           <option value="Disponible">Disponible</option>
@@ -58,23 +59,23 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
       </div>
 
       <!-- Table -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
         @if (loading()) {
           <div class="flex items-center justify-center py-16">
             <app-spinner size="lg" class="text-orange-500" />
           </div>
         } @else if (filtrados().length === 0) {
           <div class="flex flex-col items-center justify-center py-16 text-center">
-            <div class="w-12 h-12 rounded-2xl bg-slate-800 flex items-center justify-center mb-4">
-              <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-12 h-12 rounded-2xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-slate-400 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                   d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10l1 1h1m8-1h3l3-3V9.5L17 7h-4v9z"/>
               </svg>
             </div>
-            <p class="text-sm font-medium text-slate-400">{{ (filtroTexto || filtroEstado) ? 'Sin resultados' : 'Sin camiones' }}</p>
-            <p class="text-xs text-slate-600 mt-1">
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">{{ (filtroTexto || filtroEstado) ? 'Sin resultados' : 'Sin camiones' }}</p>
+            <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">
               {{ (filtroTexto || filtroEstado) ? 'Prueba con otros filtros' : 'Agrega camiones con el botón de arriba' }}
             </p>
           </div>
@@ -82,7 +83,7 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
-                <tr class="border-b border-slate-800">
+                <tr class="border-b border-slate-200 dark:border-slate-800">
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Patente</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden sm:table-cell">Vehículo</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden md:table-cell">Carga</th>
@@ -91,26 +92,26 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
                   <th class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider text-right">Acciones</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-800/60">
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                 @for (cam of filtrados(); track cam.id) {
-                  <tr class="hover:bg-slate-800/40 transition-colors group">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors group">
                     <td class="px-5 py-3.5">
                       <span class="font-mono font-bold text-orange-400">{{ cam.patente }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden sm:table-cell">
-                      <p class="font-medium text-slate-200">{{ cam.marca }} {{ cam.modelo }}</p>
+                      <p class="font-medium text-slate-800 dark:text-slate-200">{{ cam.marca }} {{ cam.modelo }}</p>
                     </td>
                     <td class="px-5 py-3.5 hidden md:table-cell">
-                      <span class="text-slate-400 text-xs">{{ cam.carga }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs">{{ cam.carga }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden lg:table-cell">
                       @if (cam.conductor) {
                         <div>
-                          <p class="text-slate-300 text-sm">{{ cam.conductor.nombre }} {{ cam.conductor.apellido }}</p>
-                          <p class="text-xs text-slate-600 font-mono">{{ cam.conductor.rut }}</p>
+                          <p class="text-slate-700 dark:text-slate-300 text-sm">{{ cam.conductor.nombre }} {{ cam.conductor.apellido }}</p>
+                          <p class="text-xs text-slate-400 dark:text-slate-600 font-mono">{{ cam.conductor.rut }}</p>
                         </div>
                       } @else {
-                        <span class="text-slate-600 text-xs">Sin conductor</span>
+                        <span class="text-slate-400 dark:text-slate-600 text-xs">Sin conductor</span>
                       }
                     </td>
                     <td class="px-5 py-3.5">
@@ -121,7 +122,7 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
                     <td class="px-5 py-3.5">
                       <div class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
-                          class="p-1.5 rounded-lg text-slate-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors"
+                          class="p-1.5 rounded-lg text-slate-400 hover:text-blue-500 hover:bg-blue-500/10 transition-colors"
                           (click)="abrirEditar(cam)"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -130,7 +131,7 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
                           </svg>
                         </button>
                         <button
-                          class="p-1.5 rounded-lg text-slate-400 hover:text-red-400 hover:bg-red-500/10 transition-colors"
+                          class="p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-colors"
                           (click)="pedirEliminar(cam)"
                         >
                           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -160,68 +161,69 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
         @if (!editando()) {
           <div class="grid grid-cols-2 gap-3">
             <div>
-              <label class="block text-xs font-medium text-slate-400 mb-1.5">Patente</label>
+              <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">Patente</label>
               <input type="text" [(ngModel)]="form.patente" name="patente" required placeholder="BCFT-79"
-                class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                       placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
-                       focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                       text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                       text-sm font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-400 mb-1.5">RFID</label>
+              <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">RFID</label>
               <input type="text" [(ngModel)]="form.rfid" name="rfid" required placeholder="A1B2C3D4"
-                class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                       placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
-                       focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                       text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                       text-sm font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
             </div>
           </div>
         } @else {
           <div class="grid grid-cols-2 gap-3">
-            <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/50 border border-slate-700">
+            <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700">
               <span class="text-xs text-slate-500">Patente:</span>
               <span class="font-mono font-bold text-orange-400">{{ editando()?.patente }}</span>
             </div>
             <div>
-              <label class="block text-xs font-medium text-slate-400 mb-1.5">RFID</label>
+              <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">RFID</label>
               <input type="text" [(ngModel)]="form.rfid" name="rfid" placeholder="A1B2C3D4"
-                class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                       placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
-                       focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                       text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                       text-sm font-mono focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
             </div>
           </div>
         }
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1.5">Marca</label>
+            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">Marca</label>
             <input type="text" [(ngModel)]="form.marca" name="marca" [required]="!editando()" placeholder="Volvo"
-              class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                     placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40
-                     focus:border-orange-500/40 transition-all" />
+              class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                     text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                     text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1.5">Modelo</label>
+            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">Modelo</label>
             <input type="text" [(ngModel)]="form.modelo" name="modelo" [required]="!editando()" placeholder="FH16"
-              class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                     placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40
-                     focus:border-orange-500/40 transition-all" />
+              class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                     text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                     text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
           </div>
         </div>
 
         <div>
-          <label class="block text-xs font-medium text-slate-400 mb-1.5">Tipo de carga</label>
+          <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">Tipo de carga</label>
           <input type="text" [(ngModel)]="form.carga" name="carga" [required]="!editando()" placeholder="Materias primas"
-            class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                   placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40
-                   focus:border-orange-500/40 transition-all" />
+            class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                   text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                   text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
         </div>
 
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1.5">Conductor (RUT)</label>
+            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">Conductor (RUT)</label>
             <select [(ngModel)]="form.conductor" name="conductor"
               [required]="!editando()"
-              class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                     text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all">
+              class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                     text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2
+                     focus:ring-orange-500/40 focus:border-orange-500/40 transition-all">
               <option value="">Seleccionar...</option>
               @for (con of conductores(); track con.id) {
                 <option [value]="con.rut">{{ con.nombre }} {{ con.apellido }} – {{ con.rut }}</option>
@@ -229,10 +231,11 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
             </select>
           </div>
           <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1.5">Estado</label>
+            <label class="block text-xs font-medium text-slate-500 dark:text-slate-400 mb-1.5">Estado</label>
             <select [(ngModel)]="form.estado" name="estado"
-              class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                     text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all">
+              class="w-full px-3 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700
+                     text-slate-900 dark:text-slate-100 text-sm focus:outline-none focus:ring-2
+                     focus:ring-orange-500/40 focus:border-orange-500/40 transition-all">
               <option value="Disponible">Disponible</option>
               <option value="Reparto">En reparto</option>
             </select>

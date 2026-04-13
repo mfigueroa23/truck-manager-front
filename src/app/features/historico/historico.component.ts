@@ -14,35 +14,48 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       <!-- Header -->
       <div class="flex items-center justify-between">
         <div>
-          <h1 class="text-xl font-semibold text-slate-100">🕓 Histórico de Viajes</h1>
+          <h1 class="text-xl font-semibold text-slate-900 dark:text-slate-100">🕓 Histórico de Viajes</h1>
           <p class="text-sm text-slate-500 mt-0.5">Registro completo de entradas y salidas</p>
         </div>
-        <button (click)="cargar()" [disabled]="loading()"
-          class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-slate-400
-                 hover:text-slate-200 hover:bg-slate-800 border border-slate-700 transition-colors">
-          <svg class="w-3.5 h-3.5" [class.animate-spin]="loading()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
-          </svg>
-          Actualizar
-        </button>
+        <div class="flex items-center gap-2">
+          <button (click)="exportarExcel()" [disabled]="filtrados().length === 0"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium text-emerald-700 dark:text-emerald-400
+                   hover:text-emerald-800 dark:hover:text-emerald-300 hover:bg-emerald-50 dark:hover:bg-emerald-500/10
+                   border border-emerald-300 dark:border-emerald-500/40 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
+            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+            </svg>
+            Exportar Excel
+          </button>
+          <button (click)="cargar()" [disabled]="loading()"
+            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium
+                   text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200
+                   hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-300 dark:border-slate-700 transition-colors">
+            <svg class="w-3.5 h-3.5" [class.animate-spin]="loading()" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+            Actualizar
+          </button>
+        </div>
       </div>
 
       <!-- Stats -->
       <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">📦 Total viajes</p>
-          <p class="text-2xl font-bold text-slate-100">{{ historico().length }}</p>
+          <p class="text-2xl font-bold text-slate-900 dark:text-slate-100">{{ historico().length }}</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">📅 Hoy</p>
           <p class="text-2xl font-bold text-orange-400">{{ viajesHoy() }}</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">📅 Esta semana</p>
           <p class="text-2xl font-bold text-blue-400">{{ viajesSemana() }}</p>
         </div>
-        <div class="bg-slate-900 border border-slate-800 rounded-xl p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4">
           <p class="text-xs text-slate-500 mb-1">⏱ Duración media</p>
           <p class="text-2xl font-bold text-emerald-400">{{ duracionMedia() }}</p>
         </div>
@@ -52,10 +65,10 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
         <!-- Salidas -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
           <div class="flex items-center justify-between mb-4">
             <div>
-              <p class="text-sm font-medium text-slate-200">📤 Salidas por día</p>
+              <p class="text-sm font-medium text-slate-800 dark:text-slate-200">📤 Salidas por día</p>
               <p class="text-xs text-slate-500">Últimos 14 días</p>
             </div>
             <span class="text-lg font-bold text-orange-400">{{ salidasTotal() }}</span>
@@ -67,10 +80,9 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                 <stop offset="100%" stop-color="#f97316" stop-opacity="0"/>
               </linearGradient>
             </defs>
-            <!-- Grid lines -->
             @for (line of [0,1,2,3]; track line) {
               <line x1="0" [attr.y1]="line*25" x2="300" [attr.y2]="line*25"
-                stroke="#1e293b" stroke-width="1"/>
+                class="stroke-slate-200 dark:stroke-slate-800" stroke-width="1"/>
             }
             @if (salidasLine().area) {
               <path [attr.d]="salidasLine().area" fill="url(#hGradSal)"/>
@@ -84,24 +96,24 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                 }
               }
             } @else {
-              <text x="150" y="55" text-anchor="middle" fill="#334155" font-size="11"
+              <text x="150" y="55" text-anchor="middle" class="fill-slate-300 dark:fill-slate-700" font-size="11"
                 font-family="sans-serif">Sin datos en este período</text>
             }
           </svg>
           <div class="flex justify-between mt-2">
             @for (lbl of lineLabels(); track $index) {
               @if ($index % 2 === 0) {
-                <span class="text-xs text-slate-600">{{ lbl }}</span>
+                <span class="text-xs text-slate-400 dark:text-slate-600">{{ lbl }}</span>
               }
             }
           </div>
         </div>
 
         <!-- Entradas -->
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl p-5">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5">
           <div class="flex items-center justify-between mb-4">
             <div>
-              <p class="text-sm font-medium text-slate-200">📥 Entradas por día</p>
+              <p class="text-sm font-medium text-slate-800 dark:text-slate-200">📥 Entradas por día</p>
               <p class="text-xs text-slate-500">Últimos 14 días</p>
             </div>
             <span class="text-lg font-bold text-blue-400">{{ entradasTotal() }}</span>
@@ -115,7 +127,7 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
             </defs>
             @for (line of [0,1,2,3]; track line) {
               <line x1="0" [attr.y1]="line*25" x2="300" [attr.y2]="line*25"
-                stroke="#1e293b" stroke-width="1"/>
+                class="stroke-slate-200 dark:stroke-slate-800" stroke-width="1"/>
             }
             @if (entradasLine().area) {
               <path [attr.d]="entradasLine().area" fill="url(#hGradEnt)"/>
@@ -129,14 +141,14 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                 }
               }
             } @else {
-              <text x="150" y="55" text-anchor="middle" fill="#334155" font-size="11"
+              <text x="150" y="55" text-anchor="middle" class="fill-slate-300 dark:fill-slate-700" font-size="11"
                 font-family="sans-serif">Sin datos en este período</text>
             }
           </svg>
           <div class="flex justify-between mt-2">
             @for (lbl of lineLabels(); track $index) {
               @if ($index % 2 === 0) {
-                <span class="text-xs text-slate-600">{{ lbl }}</span>
+                <span class="text-xs text-slate-400 dark:text-slate-600">{{ lbl }}</span>
               }
             }
           </div>
@@ -146,31 +158,33 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
       <!-- Search & filter -->
       <div class="flex flex-col sm:flex-row gap-2">
         <div class="relative flex-1">
-          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500"
+          <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400"
             fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0"/>
           </svg>
           <input type="text" [(ngModel)]="busqueda"
             placeholder="Buscar por patente, conductor o empresa..."
-            class="w-full pl-9 pr-4 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm
-                   text-slate-200 placeholder:text-slate-600 focus:outline-none focus:ring-2
-                   focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"/>
+            class="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm
+                   text-slate-800 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-600
+                   focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"/>
         </div>
         <input type="date" [(ngModel)]="fechaDesde"
-          class="px-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-400
-                 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"/>
+          class="px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm
+                 text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40
+                 focus:border-orange-500/40 transition-all"/>
         <input type="date" [(ngModel)]="fechaHasta"
-          class="px-3 py-2.5 bg-slate-900 border border-slate-800 rounded-xl text-sm text-slate-400
-                 focus:outline-none focus:ring-2 focus:ring-orange-500/40 focus:border-orange-500/40 transition-all"/>
+          class="px-3 py-2.5 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm
+                 text-slate-600 dark:text-slate-400 focus:outline-none focus:ring-2 focus:ring-orange-500/40
+                 focus:border-orange-500/40 transition-all"/>
       </div>
 
       <!-- Table -->
-      <div class="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden">
-        <div class="px-5 py-4 border-b border-slate-800 flex items-center justify-between">
-          <h2 class="text-sm font-medium text-slate-200">Viajes completados</h2>
+      <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl overflow-hidden">
+        <div class="px-5 py-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <h2 class="text-sm font-medium text-slate-800 dark:text-slate-200">Viajes completados</h2>
           <div class="flex items-center gap-3">
-            @if (loading()) { <app-spinner size="sm" class="text-slate-500"/> }
+            @if (loading()) { <app-spinner size="sm" class="text-slate-400"/> }
             <span class="text-xs text-slate-500">{{ filtrados().length }} registro{{ filtrados().length !== 1 ? 's' : '' }}</span>
           </div>
         </div>
@@ -181,14 +195,14 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
           </div>
         } @else if (filtrados().length === 0) {
           <div class="flex flex-col items-center justify-center py-12 text-center">
-            <p class="text-sm font-medium text-slate-400">Sin resultados</p>
-            <p class="text-xs text-slate-600 mt-1">Ajusta los filtros o espera a que se completen viajes</p>
+            <p class="text-sm font-medium text-slate-500 dark:text-slate-400">Sin resultados</p>
+            <p class="text-xs text-slate-400 dark:text-slate-600 mt-1">Ajusta los filtros o espera a que se completen viajes</p>
           </div>
         } @else {
           <div class="overflow-x-auto">
             <table class="w-full text-sm">
               <thead>
-                <tr class="border-b border-slate-800">
+                <tr class="border-b border-slate-200 dark:border-slate-800">
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">#</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Patente</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Conductor</th>
@@ -198,32 +212,32 @@ import { SpinnerComponent } from '../../shared/atoms/spinner/spinner.component';
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Duración</th>
                 </tr>
               </thead>
-              <tbody class="divide-y divide-slate-800/60">
+              <tbody class="divide-y divide-slate-100 dark:divide-slate-800/60">
                 @for (h of filtrados(); track h.id) {
-                  <tr class="hover:bg-slate-800/40 transition-colors">
+                  <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
                     <td class="px-5 py-3.5">
-                      <span class="text-xs text-slate-600 font-mono">#{{ h.id }}</span>
+                      <span class="text-xs text-slate-400 dark:text-slate-600 font-mono">#{{ h.id }}</span>
                     </td>
                     <td class="px-5 py-3.5">
                       <span class="font-mono font-medium text-orange-400">{{ h.patente }}</span>
                     </td>
                     <td class="px-5 py-3.5">
                       <div>
-                        <p class="text-slate-200 font-medium">{{ h.conductor.nombre }}</p>
+                        <p class="text-slate-800 dark:text-slate-200 font-medium">{{ h.conductor.nombre }}</p>
                         <p class="text-xs text-slate-500 font-mono">{{ h.conductor.rut }}</p>
                       </div>
                     </td>
                     <td class="px-5 py-3.5 hidden md:table-cell">
-                      <span class="text-slate-300">{{ h.empresa }}</span>
+                      <span class="text-slate-600 dark:text-slate-300">{{ h.empresa }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden sm:table-cell">
-                      <span class="text-slate-400 text-xs font-mono">{{ formatDate(h.salidaAt) }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs font-mono">{{ formatDate(h.salidaAt) }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden sm:table-cell">
-                      <span class="text-slate-400 text-xs font-mono">{{ formatDate(h.entradaAt) }}</span>
+                      <span class="text-slate-500 dark:text-slate-400 text-xs font-mono">{{ formatDate(h.entradaAt) }}</span>
                     </td>
                     <td class="px-5 py-3.5">
-                      <span class="text-emerald-400 text-xs font-mono font-medium">{{ duracion(h.salidaAt, h.entradaAt) }}</span>
+                      <span class="text-emerald-500 dark:text-emerald-400 text-xs font-mono font-medium">{{ duracion(h.salidaAt, h.entradaAt) }}</span>
                     </td>
                   </tr>
                 }
@@ -319,6 +333,36 @@ export class HistoricoComponent implements OnInit {
     const h  = Math.floor(ms / 3_600_000);
     const m  = Math.floor((ms % 3_600_000) / 60_000);
     return h > 0 ? `${h}h ${m}m` : `${m}m`;
+  }
+
+  exportarExcel(): void {
+    const datos = this.filtrados();
+    if (datos.length === 0) return;
+
+    const headers = ['#', 'Patente', 'Conductor', 'RUT', 'Empresa', 'Salida', 'Entrada', 'Duración'];
+    const filas = datos.map(h => [
+      h.id,
+      h.patente,
+      h.conductor.nombre,
+      h.conductor.rut,
+      h.empresa,
+      this.formatDate(h.salidaAt),
+      this.formatDate(h.entradaAt),
+      this.duracion(h.salidaAt, h.entradaAt),
+    ]);
+
+    const csv = [headers, ...filas]
+      .map(fila => fila.map(celda => `"${String(celda).replace(/"/g, '""')}"`).join(','))
+      .join('\r\n');
+
+    // UTF-8 BOM para que Excel reconozca tildes y caracteres especiales
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href     = url;
+    a.download = `historico-viajes-${new Date().toISOString().split('T')[0]}.csv`;
+    a.click();
+    URL.revokeObjectURL(url);
   }
 
   private buildLine(items: HistoricoItem[], field: 'salidaAt' | 'entradaAt') {

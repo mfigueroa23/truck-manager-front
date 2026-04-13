@@ -30,13 +30,13 @@ export class ButtonComponent {
   clicked  = output<MouseEvent>();
 
   classes = computed(() => {
-    const base = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed';
+    const base = 'inline-flex items-center justify-center gap-2 font-medium rounded-lg transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-900 disabled:opacity-50 disabled:cursor-not-allowed';
 
     const variants: Record<ButtonVariant, string> = {
       primary:   'bg-orange-500 hover:bg-orange-400 text-white focus:ring-orange-500 shadow-sm',
-      secondary: 'bg-slate-700 hover:bg-slate-600 text-slate-100 focus:ring-slate-500',
+      secondary: 'bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-100 focus:ring-slate-400 border border-slate-200 dark:border-slate-600',
       danger:    'bg-red-600 hover:bg-red-500 text-white focus:ring-red-500',
-      ghost:     'bg-transparent hover:bg-slate-800 text-slate-300 hover:text-slate-100 focus:ring-slate-500',
+      ghost:     'bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-800 dark:hover:text-slate-100 focus:ring-slate-400',
     };
 
     const sizes: Record<ButtonSize, string> = {

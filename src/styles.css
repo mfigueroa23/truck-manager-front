@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
   --color-surface: #0f172a;
   --color-card: #1e293b;
@@ -17,9 +19,14 @@
   }
 
   body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    margin: 0;
+  }
+
+  html.dark body {
     background-color: #020617;
     color: #e2e8f0;
-    margin: 0;
   }
 
   ::-webkit-scrollbar {
@@ -28,15 +35,27 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: #0f172a;
+    background: #f1f5f9;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #334155;
+    background: #cbd5e1;
     border-radius: 2px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  html.dark ::-webkit-scrollbar-track {
+    background: #0f172a;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb {
+    background: #334155;
+  }
+
+  html.dark ::-webkit-scrollbar-thumb:hover {
     background: #475569;
   }
 }
