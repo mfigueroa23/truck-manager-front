@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { RegistroView, RegistroCreado } from '../models/registro.model';
+import { RegistroView, RegistroCreado, HistoricoItem } from '../models/registro.model';
 
 const BASE = 'https://api-truckmanager.devsonic.cl';
 
@@ -10,6 +10,10 @@ export class RegistroService {
 
   getAll() {
     return this.http.get<RegistroView[]>(`${BASE}/registro`);
+  }
+
+  getHistorico() {
+    return this.http.get<HistoricoItem[]>(`${BASE}/registro/historico`);
   }
 
   registrarAcceso(rfid: string) {

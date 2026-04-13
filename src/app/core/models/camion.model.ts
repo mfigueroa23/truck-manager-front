@@ -5,6 +5,7 @@ export type EstadoCamion = 'Disponible' | 'Reparto';
 export interface Camion {
   id: number;
   patente: string;
+  rfid: string;
   marca: string;
   modelo: string;
   carga: string;
@@ -15,6 +16,7 @@ export interface Camion {
 
 export interface CreateCamionDto {
   patente: string;
+  rfid: string;
   marca: string;
   modelo: string;
   carga: string;
@@ -23,6 +25,7 @@ export interface CreateCamionDto {
 }
 
 export interface UpdateCamionDto {
+  rfid?: string;
   marca?: string;
   modelo?: string;
   carga?: string;

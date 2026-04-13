@@ -12,6 +12,16 @@ export const routes: Routes = [
       import('./features/registro/registro.component').then(m => m.RegistroComponent)
   },
   {
+    path: 'historico',
+    loadComponent: () =>
+      import('./features/historico/historico.component').then(m => m.HistoricoComponent)
+  },
+  {
+    path: 'graficos',
+    loadComponent: () =>
+      import('./features/graficos/graficos.component').then(m => m.GraficosComponent)
+  },
+  {
     path: 'empresas',
     loadComponent: () =>
       import('./features/empresas/empresas.component').then(m => m.EmpresasComponent)

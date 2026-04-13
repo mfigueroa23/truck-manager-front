@@ -71,7 +71,7 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
                 <tr class="border-b border-slate-800">
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Conductor</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden sm:table-cell">RUT</th>
-                  <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden md:table-cell">RFID</th>
+                  <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden md:table-cell">Empresa</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden lg:table-cell">Empresa</th>
                   <th class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider text-right">Acciones</th>
                 </tr>
@@ -94,9 +94,6 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
                       <span class="font-mono text-slate-400 text-xs">{{ con.rut }}</span>
                     </td>
                     <td class="px-5 py-3.5 hidden md:table-cell">
-                      <span class="font-mono text-slate-500 text-xs bg-slate-800 px-2 py-0.5 rounded">{{ con.rfid }}</span>
-                    </td>
-                    <td class="px-5 py-3.5 hidden lg:table-cell">
                       <span class="text-slate-300 text-sm">{{ con.empresa ? con.empresa.nombre : '—' }}</span>
                     </td>
                     <td class="px-5 py-3.5">
@@ -165,15 +162,6 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
         }
 
         <div>
-          <label class="block text-xs font-medium text-slate-400 mb-1.5">RFID</label>
-          <input type="text" [(ngModel)]="form.rfid" name="rfid"
-            [required]="!editando()" placeholder="abcd-1234"
-            class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                   placeholder:text-slate-600 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/40
-                   focus:border-orange-500/40 transition-all font-mono" />
-        </div>
-
-        <div>
           <label class="block text-xs font-medium text-slate-400 mb-1.5">Empresa</label>
           <select [(ngModel)]="form.empresa" name="empresa"
             [required]="!editando()"
@@ -219,7 +207,7 @@ export class ConductoresComponent implements OnInit {
   conductorAEliminar  = signal<Conductor | null>(null);
   filtro              = signal('');
 
-  form = { nombre: '', apellido: '', rut: '', rfid: '', empresa: '' };
+  form = { nombre: '', apellido: '', rut: '', empresa: '' };
 
   filtrados = () => {
     const q = this.filtro().toLowerCase();
@@ -250,7 +238,7 @@ export class ConductoresComponent implements OnInit {
 
   abrirCrear() {
     this.editando.set(null);
-    this.form = { nombre: '', apellido: '', rut: '', rfid: '', empresa: '' };
+    this.form = { nombre: '', apellido: '', rut: '', empresa: '' };
     this.modalAbierto.set(true);
   }
 
@@ -260,7 +248,6 @@ export class ConductoresComponent implements OnInit {
       nombre:   con.nombre,
       apellido: con.apellido,
       rut:      con.rut,
-      rfid:     con.rfid,
       empresa:  con.empresa?.nombre ?? ''
     };
     this.modalAbierto.set(true);
@@ -279,14 +266,12 @@ export class ConductoresComponent implements OnInit {
       ? this.conductorService.update(editing.id, {
           nombre:   this.form.nombre   || undefined,
           apellido: this.form.apellido || undefined,
-          rfid:     this.form.rfid     || undefined,
           empresa:  this.form.empresa  || undefined,
         })
       : this.conductorService.create({
           nombre:   this.form.nombre,
           apellido: this.form.apellido,
           rut:      this.form.rut,
-          rfid:     this.form.rfid,
           empresa:  this.form.empresa,
         });
 

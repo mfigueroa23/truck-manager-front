@@ -29,7 +29,7 @@ interface NavItem {
     >
       <!-- Logo -->
       <div class="flex items-center gap-3 px-5 py-5 border-b border-slate-800">
-        <div class="w-9 h-9 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center flex-shrink-0">
+        <div class="w-9 h-9 rounded-xl bg-orange-500/10 border border-orange-500/30 flex items-center justify-center shrink-0">
           <svg class="w-5 h-5 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
               d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
@@ -56,7 +56,7 @@ interface NavItem {
                    border border-transparent group"
             (click)="closed.emit()"
           >
-            <span class="w-5 h-5 flex-shrink-0" [innerHTML]="item.icon"></span>
+            <span class="w-5 h-5 shrink-0" [innerHTML]="item.icon"></span>
             {{ item.label }}
           </a>
         }
@@ -84,6 +84,22 @@ export class SidebarComponent {
       icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                  d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+             </svg>`
+    },
+    {
+      label: '🕓 Histórico',
+      route: '/historico',
+      icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                 d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+             </svg>`
+    },
+    {
+      label: '📊 Gráficos',
+      route: '/graficos',
+      icon: `<svg fill="none" stroke="currentColor" viewBox="0 0 24 24" class="w-5 h-5">
+               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                 d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
              </svg>`
     },
     {

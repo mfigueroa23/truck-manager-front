@@ -158,18 +158,35 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
       <form (ngSubmit)="guardar()" class="space-y-4">
 
         @if (!editando()) {
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1.5">Patente</label>
-            <input type="text" [(ngModel)]="form.patente" name="patente" required placeholder="BCFT-79"
-              class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
-                     placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
-                     focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1.5">Patente</label>
+              <input type="text" [(ngModel)]="form.patente" name="patente" required placeholder="BCFT-79"
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
+                       placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
+                       focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1.5">RFID</label>
+              <input type="text" [(ngModel)]="form.rfid" name="rfid" required placeholder="A1B2C3D4"
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
+                       placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
+                       focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+            </div>
           </div>
         } @else {
-          <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/50 border border-slate-700">
-            <span class="text-xs text-slate-500">Patente:</span>
-            <span class="font-mono font-bold text-orange-400">{{ editando()?.patente }}</span>
-            <span class="text-xs text-slate-600">(no modificable)</span>
+          <div class="grid grid-cols-2 gap-3">
+            <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-slate-800/50 border border-slate-700">
+              <span class="text-xs text-slate-500">Patente:</span>
+              <span class="font-mono font-bold text-orange-400">{{ editando()?.patente }}</span>
+            </div>
+            <div>
+              <label class="block text-xs font-medium text-slate-400 mb-1.5">RFID</label>
+              <input type="text" [(ngModel)]="form.rfid" name="rfid" placeholder="A1B2C3D4"
+                class="w-full px-3 py-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-100
+                       placeholder:text-slate-600 text-sm font-mono focus:outline-none focus:ring-2
+                       focus:ring-orange-500/40 focus:border-orange-500/40 transition-all" />
+            </div>
           </div>
         }
 
@@ -257,7 +274,7 @@ export class CamionesComponent implements OnInit {
   filtroTexto  = '';
   filtroEstado = '';
 
-  form = { patente: '', marca: '', modelo: '', carga: '', conductor: '', estado: 'Disponible' };
+  form = { patente: '', rfid: '', marca: '', modelo: '', carga: '', conductor: '', estado: 'Disponible' };
 
   filtrados = () => {
     let list = this.camiones();
@@ -286,7 +303,7 @@ export class CamionesComponent implements OnInit {
 
   abrirCrear() {
     this.editando.set(null);
-    this.form = { patente: '', marca: '', modelo: '', carga: '', conductor: '', estado: 'Disponible' };
+    this.form = { patente: '', rfid: '', marca: '', modelo: '', carga: '', conductor: '', estado: 'Disponible' };
     this.modalAbierto.set(true);
   }
 
@@ -294,6 +311,7 @@ export class CamionesComponent implements OnInit {
     this.editando.set(cam);
     this.form = {
       patente:   cam.patente,
+      rfid:      cam.rfid ?? '',
       marca:     cam.marca,
       modelo:    cam.modelo,
       carga:     cam.carga,
@@ -314,6 +332,7 @@ export class CamionesComponent implements OnInit {
 
     const op = editing
       ? this.camionService.update(editing.id, {
+          rfid:      this.form.rfid      || undefined,
           marca:     this.form.marca     || undefined,
           modelo:    this.form.modelo    || undefined,
           carga:     this.form.carga     || undefined,
@@ -322,6 +341,7 @@ export class CamionesComponent implements OnInit {
         })
       : this.camionService.create({
           patente:   this.form.patente,
+          rfid:      this.form.rfid,
           marca:     this.form.marca,
           modelo:    this.form.modelo,
           carga:     this.form.carga,
