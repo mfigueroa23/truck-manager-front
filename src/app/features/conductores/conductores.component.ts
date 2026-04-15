@@ -72,7 +72,6 @@ import { ConfirmDialogComponent } from '../../shared/molecules/confirm-dialog/co
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider">Conductor</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden sm:table-cell">RUT</th>
                   <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden md:table-cell">Empresa</th>
-                  <th class="text-left px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider hidden lg:table-cell">Empresa</th>
                   <th class="px-5 py-3 text-xs font-medium text-slate-500 uppercase tracking-wider text-right">Acciones</th>
                 </tr>
               </thead>
